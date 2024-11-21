@@ -40,8 +40,12 @@ h1 {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   border: 4px solid #fff;
   margin-inline: auto;
-  width: clamp(320px, 50vw, 460px);
+  width: clamp(440px, 100vw, 580px);
   min-height: 40vh;
+}
+#output {
+  color: #fff;
 }
