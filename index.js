@@ -1,46 +1,79 @@
-const numberInput = document.getElementById("number");
+const form = document.getElementById("form");
+const convertButton = document.getElementById("convert-btn");
 const output = document.getElementById("output");
-const convertBtn = document.getElementById("convert-btn");
-
-const romanNumerals = [
-  { value: 1000, symbol: "M" },
-  { value: 900, symbol: "CM" },
-  { value: 500, symbol: "D" },
-  { value: 400, symbol: "CD" },
-  { value: 100, symbol: "C" },
-  { value: 90, symbol: "XC" },
-  { value: 50, symbol: "L" },
-  { value: 40, symbol: "XL" },
-  { value: 10, symbol: "X" },
-  { value: 9, symbol: "IX" },
-  { value: 5, symbol: "V" },
-  { value: 4, symbol: "IV" },
-  { value: 1, symbol: "I" },
-];
-
-const checkInput = () => {
-  const num = parseInt(numberInput.value, 10);
-
-  if (isNaN(num)) {
-    output.textContent = "Please enter a valid number";
-  } else if (num < 1) {
-    output.textContent = "Please enter a number greater than or equal to 1";
-  } else if (num >= 4000) {
-    output.textContent = "Please enter a number less than or equal to 3999";
-  } else {
-    output.textContent = convertToRoman(num);
-  }
-};
 
 const convertToRoman = (num) => {
-  let roman = "";
-  for (let i = 0; i < romanNumerals.length; i++) {
-    while (num >= romanNumerals[i].value) {
-      roman += romanNumerals[i].symbol;
-      num -= romanNumerals[i].value;
+  const ref = [
+    ["M", 1000],
+    ["CM", 900],
+    ["D", 500],
+    ["CD", 400],
+    ["C", 100],
+    ["XC", 90],
+    ["L", 50],
+    ["XL", 40],
+    ["X", 10],
+    ["IX", 9],
+    ["V", 5],
+    ["IV", 4],
+    ["I", 1],
+  ];
+  const res = [];
+
+  ref.forEach(function (arr) {
+    while (num >= arr[1]) {
+      res.push(arr[0]);
+      num -= arr[1];
     }
-  }
-  return (output.textContent = roman);
+  });
+
+  return res.join("");
 };
 
-convertBtn.addEventListener("click", () => checkInput());
+const isValid = (str, int) => {
+  let errText = "";
+
+  if (!str || str.match(/[e.]/g)) {
+    errText = "Please enter a valid number.";
+  } else if (int < 1) {
+    errText = "Please enter a number greater than or equal to 1.";
+  } else if (int > 3999) {
+    errText = "Please enter a number less than or equal to 3999.";
+  } else {
+    // No errors detected
+    return true;
+  }
+
+  // Handle error text and output styling
+  output.innerText = errText;
+  output.classList.add("alert");
+
+  return false;
+};
+
+const clearOutput = () => {
+  output.innerText = "";
+  output.classList.remove("alert");
+};
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  updateUI();
+});
+
+convertButton.addEventListener("click", () => {
+  updateUI();
+});
+
+const updateUI = () => {
+  const numStr = document.getElementById("number").value;
+  const int = parseInt(numStr, 10);
+
+  output.classList.remove("hidden");
+
+  clearOutput();
+
+  if (isValid(numStr, int)) {
+    output.innerText = convertToRoman(int);
+  }
+};

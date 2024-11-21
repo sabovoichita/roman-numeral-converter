@@ -7,16 +7,17 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <h1>Roman Numeral Converter</h1>
-    <section id="input-container">
-      <label for="name">Enter a ROMAN number: </label>
-      <input type="text" id="number" />
-      <button id="convert-btn">CONVERT</button>
-    </section>
-
-    <section id="output-container">
-      <div id="output"></div>
-    </section>
+    <main>
+      <h1>Roman Numeral Converter</h1>
+      <form id="form" class="form">
+        <fieldset>
+          <label for="number">Enter a Number:</label><br />
+          <input type="number" id="number" required />
+          <button type="button" id="convert-btn">Convert</button>
+        </fieldset>
+      </form>
+      <div id="output" class="output hidden"></div>
+    </main>
     <script src="index.js"></script>
   </body>
 </html>
